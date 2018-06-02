@@ -7,15 +7,10 @@ import {
 } from 'react-router-dom'
 
 import Loadable from 'react-loadable'
-import { LoadingPage } from './components'
+import { LoadingPage, NotFound404 } from './components'
 
 const AsyncAppMainPage = Loadable({
     loader: () => import("./containers"),
-    loading: () => <LoadingPage />
-})
-
-const AsyncNotFound404 = Loadable({
-    loader: () => import("./components/404"),
     loading: () => <LoadingPage />
 })
 
@@ -25,7 +20,7 @@ export default function Routes() {
         <Router>
             <Switch>
                 <Route path="/" component={AsyncAppMainPage}/>
-                <Route component={AsyncNotFound404} />
+                <Route component={NotFound404} />
             </Switch>
         </Router>
     )

@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
@@ -35,7 +36,7 @@ const client = new ApolloClient({
 
 const store = configureStore();
 
-class App extends Component {
+class App extends Component<{}>{
     
     render() {
         return (

@@ -1,21 +1,17 @@
+// @flow
 import React from 'react'
 
 import {
-  BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
 
 import Loadable from 'react-loadable'
-import { LoadingPage } from './../components'
+import { LoadingPage, NotFound404 } from './../components'
+import { UnauthenticatedRoute } from './../components/Routes'
 
 const AsyncAppLogin = Loadable({
-    loader: () => import("./Account").then((component) => component.Login),
-    loading: () => <LoadingPage />
-})
-
-const AsyncNotFound404 = Loadable({
-    loader: () => import("./../components/404"),
+    loader: () => import("./Account").then((c) => c.Login),
     loading: () => <LoadingPage />
 })
 
@@ -24,13 +20,22 @@ const AsyncStoreFront = Loadable({
     loading: () => <LoadingPage />
 })
 
-export default function Routes() {
+export default function Routes({ childProps }: any) {
+    childProps = childProps || {isAuthenticated: false}
     
     return (
         <Switch>
-            <Route exact path="/" component={AsyncStoreFront} />
-            <Route exact path="/account/login" component={AsyncAppLogin} />
-            <Route component={AsyncNotFound404} />
+            <UnauthenticatedRoute 
+              exact path="/" 
+              component={AsyncStoreFront}
+              props={childProps}
+            />
+            <UnauthenticatedRoute 
+              exact path="/account/login" 
+              component={AsyncAppLogin}
+              props={childProps}
+            />
+            <Route component={NotFound404} />
         </Switch>
     )
 }
