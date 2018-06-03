@@ -1,0 +1,5 @@
+.btn {
+    &.disabled {
+        pointer-events: none;
+    }
+}

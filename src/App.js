@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
-import { HttpLink } from 'apollo-link-http'
+import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context'
 
@@ -12,19 +12,18 @@ import Routes from './Routes'
 import configureStore from './redux/store'
 import { AUTH_TOKEN } from './constants'
 
-const httpLink = new HttpLink({
-    uri: 'http://localhost:8080/api/graphql'
+const httpLink = createHttpLink({
+    uri: '/api/graphql',
+    credentials: 'same-origin'
 })
 
 const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem(AUTH_TOKEN);
-    console.log('token::::: ', token);
     
-    // return the headers to the context so httpLink can read them
     return {
         headers: {
           ...headers,
-          authorization: token ? `Bearer ${token}` : "",
+          authorization: token ? `JWT ${token}` : "",
         }
     }
 })

@@ -21,8 +21,7 @@ const AsyncStoreFront = Loadable({
 })
 
 export default function Routes({ childProps }: any) {
-    childProps = childProps || {isAuthenticated: false}
-    
+  
     return (
         <Switch>
             <UnauthenticatedRoute 

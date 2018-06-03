@@ -6,20 +6,15 @@ import {
   Switch
 } from 'react-router-dom'
 
-import Loadable from 'react-loadable'
-import { LoadingPage, NotFound404 } from './components'
-
-const AsyncAppMainPage = Loadable({
-    loader: () => import("./containers"),
-    loading: () => <LoadingPage />
-})
+import { NotFound404 } from './components'
+import AppMainPage from "./containers"
 
 export default function Routes() {
     
     return (
         <Router>
             <Switch>
-                <Route path="/" component={AsyncAppMainPage}/>
+                <Route path="/" component={AppMainPage}/>
                 <Route component={NotFound404} />
             </Switch>
         </Router>

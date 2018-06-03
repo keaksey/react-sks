@@ -38,4 +38,19 @@ declare module "redux" {
     declare module.exports: any;
 }
 
+declare module "prop-types" {
+    declare module.exports: any;
+}
+
+declare module "classnames" {
+    declare module.exports: any;
+}
+
+declare module "redux-thunk" {
+    declare module.exports: any;
+}
+
+declare module "lodash" {
+    declare module.exports: any;
+}
 

@@ -1,38 +1,29 @@
 // @flow
 import React from "react"
-import { Route, Redirect } from "react-router-dom"
+import { Route } from "react-router-dom"
 
-function querystring(name: string, url: string = window.location.href) {
-    name = name.replace(/[[]]/g, "\\$&");
-    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i");
-    const results = regex.exec(url);
+// function querystring(name: string, url: string = window.location.href) {
+//     name = name.replace(/[[]]/g, "\\$&");
+//     const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i");
+//     const results = regex.exec(url);
     
-    if (!results) {
-        return null;
-    }
+//     if (!results) {
+//         return null;
+//     }
     
-    if (!results[2]) {
-        return "";
-    }
+//     if (!results[2]) {
+//         return "";
+//     }
     
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+//     return decodeURIComponent(results[2].replace(/\+/g, " "));
+// }
 
-export function UnauthenticatedRoute({ component, props, ...rest }: any) {
-  const redirect = querystring("redirect");
-  const C = component;
-  const cProps = props;
+export function UnauthenticatedRoute({ component: C, props: cProps, ...rest }: any) {
   
   return (
         <Route
           {...rest}
-          render={(params: any) =>
-            !cProps.isAuthenticated
-              ? <C {...params} {...cProps} />
-              : <Redirect
-                  to={redirect === "" || redirect === null ? "/" : redirect}
-                />
-            }
+          render={(params: any) => (<C {...params} {...cProps} />)}
         />
   );
 }

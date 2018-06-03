@@ -1,25 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+export { default as withForm} from './withForm'
 
 const propsTypes = {
     input: PropTypes.object
 }
-
 export const renderField = (props: propsTypes) =>{
     let { 
         input, 
         type, 
-        label, 
-        placeholder, 
-        multiline, 
-        prefix, 
-        helpText, 
-        labelAction,
-        min,
-        options,
-        connectedRight,
-        readOnly,
-        meta: { touched, error },
+        // label, 
+        // placeholder, 
+        // multiline, 
+        // prefix, 
+        // helpText, 
+        // labelAction,
+        // min,
+        // options,
+        // connectedRight,
+        // readOnly,
+        //meta: { touched, error },
         className
     } = props;
     
@@ -29,3 +29,4 @@ export const renderField = (props: propsTypes) =>{
         </div>
     )
 }
+

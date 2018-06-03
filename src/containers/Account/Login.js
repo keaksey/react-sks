@@ -1,42 +1,58 @@
+// @flow
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { graphql, compose } from 'react-apollo'
-import { Field, reduxForm } from 'redux-form'
+import { Field } from 'redux-form'
+import { isEmpty } from 'lodash'
 
 import { AUTH_TOKEN } from './../../constants'
 import { Forms, Button } from './../../components'
-import { LOGIN_MUTATION } from './mutation'
+import { Users } from './../../graphql'
 
-class Login extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+type Props = {
+    tokenCreate: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    submitting: bool,
+    dirty: bool,
+    startSubmit: PropTypes.func,
+    stopSubmit: PropTypes.func,
+    formErrors: any,
+    history: PropTypes.object
+};
+
+class Login extends Component<Props> {
     
-    async handleSubmit(field) {
-        const result = await this.props.tokenCreate({
-            variables: {...field},
+    handleSubmit = (field: any) => {
+        this.props.startSubmit();
+        this.props.tokenCreate({
+            variables: {...field}
+        }).then(({ data }) => {
+            const { errors, token } = data.tokenCreate;
+            
+            if ( !errors ) {
+                localStorage.setItem(AUTH_TOKEN, token);
+                
+                this.props.history.replace({pathname: `/`});
+                return false;
+            }
+            
+            this.props.stopSubmit(errors);
         });
-        
-        const { errors, token } = result.data.tokenCreate;
-        
-        if ( errors ) {
-            console.log('errors ', errors);
-        }else {
-            localStorage.setItem(AUTH_TOKEN, token);
-        }
-        
     }
     
     render() {
-        
-        const { handleSubmit } = this.props;
+        const { 
+            handleSubmit,
+            submitting,
+            dirty,
+            formErrors
+        } = this.props;
         
         return (
             <div className="container py-5">
                 <div className="row">
                     <div className="col-md-12">
-                        <h2 className="text-center text-white mb-4">Bootstrap 4 Login Form</h2>
+                        <h2 className="text-center text-white mb-4">SKS 4 Login Form</h2>
                         <div className="row">
                             <div className="col-md-6 mx-auto">
                                 <div className="card rounded-0">
@@ -44,9 +60,16 @@ class Login extends Component {
                                         <h3 className="mb-0">Login</h3>
                                     </div>
                                     <div className="card-body">
-                                        <form className="form" role="form" autoComplete="off" 
+                                        <form className="form" autoComplete="off"
                                             noValidate onSubmit={handleSubmit(this.handleSubmit)}
                                         >
+                                            {!isEmpty(formErrors) &&
+                                                <div className="alert alert-danger" role="alert">
+                                                    <ul>
+                                                        {formErrors.errors.map((item, i) => <li key={i}>{item.message}</li>)}
+                                                    </ul>
+                                                </div>
+                                            }
                                             <div className="form-group">
                                                 <label htmlFor="username">Username</label>
                                                 <Field 
@@ -67,14 +90,14 @@ class Login extends Component {
                                                 />
                                                 <div className="invalid-feedback">Enter your password too!</div>
                                             </div>
-                                            <div>
-                                                <label className="custom-control custom-checkbox">
-                                                  <input type="checkbox" className="custom-control-input" />
-                                                  <span className="custom-control-indicator"></span>
-                                                  <span className="custom-control-description small text-dark">Remember me on this computer</span>
-                                                </label>
-                                            </div>
-                                            <Button type="submit" className="btn btn-success btn-lg float-right" id="btnLogin">Login</Button>
+                                            <Button 
+                                                type="submit" 
+                                                className="btn-primary btn-lg float-right"
+                                                disabled={!dirty}
+                                                loading={submitting}
+                                            >
+                                                Login
+                                            </Button>
                                         </form>
                                     </div>
                                 </div>
@@ -87,12 +110,12 @@ class Login extends Component {
     }
 }
 
-Login = reduxForm({
-    form: 'LoginForm'
+// eslint-disable-next-line
+Login = Forms.withForm({
+    form: 'LoginForm',
 })(Login)
 
 export default compose(
-  //graphql(SIGNUP_MUTATION, { name: 'signupMutation' }),
-  graphql(LOGIN_MUTATION, { name: 'tokenCreate' }),
+    graphql(Users.LOGIN_MUTATION, { name: 'tokenCreate' })
 )(Login)
 
