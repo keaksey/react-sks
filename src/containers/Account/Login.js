@@ -17,7 +17,8 @@ type Props = {
     startSubmit: PropTypes.func,
     stopSubmit: PropTypes.func,
     formErrors: any,
-    history: PropTypes.object
+    history: PropTypes.object,
+    gqlRefetch: PropTypes.func
 };
 
 class Login extends Component<Props> {
@@ -31,7 +32,7 @@ class Login extends Component<Props> {
             
             if ( !errors ) {
                 localStorage.setItem(AUTH_TOKEN, token);
-                
+                this.props.gqlRefetch();
                 this.props.history.replace({pathname: `/`});
                 return false;
             }
@@ -47,6 +48,8 @@ class Login extends Component<Props> {
             dirty,
             formErrors
         } = this.props;
+        
+        console.log('submitting ', submitting)
         
         return (
             <div className="container py-5">

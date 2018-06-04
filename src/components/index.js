@@ -3,6 +3,7 @@ export * from './Https'
 export * from './Header'
 export * from './Actions'
 export { LoadingPage } from './Loadings'
+export * from './AppProvider'
 
 export {
     Forms

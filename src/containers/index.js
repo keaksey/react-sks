@@ -1,38 +1,47 @@
 // @flow
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
+import PropTypes from 'prop-types'
 
 import {
     Navbar
 } from './../components'
 
-import { Users } from './../graphql'
+import AppProvider from './../components/AppProvider'
 
+import { Users } from './../graphql'
 import Routes from './Routes'
 
-class App extends Component<{}> {
+type Props = {
+    history: PropTypes.object
+};
+class App extends Component<Props> {
     
     render() {
+        const { history } = this.props;
         
         return (
             <Query query={Users.CURRENT_USER_QUERY}>
-                {result => {
-                  let { loading, data } = result;
+                {(result) => {
+                  let { refetch, client, loading, data } = result;
                   if ( loading ) return <div>Loaind.... </div>;
+                  //console.log('result ', result);
                   
                   const childProps = {
-                    ...data
+                    ...data,
+                    gqlRefetch: refetch,
+                    history
                   }
                   
                   return (
-                    <React.Fragment>
-                        <header className="app-header">
-                            <Navbar {...childProps} />
-                        </header>
-                        <div className="container-fluid">
-                            <Routes childProps={childProps} />
-                        </div>
-                    </React.Fragment>
+                    <AppProvider gqlClient={result}>
+                        <React.Fragment>
+                          <Navbar {...childProps} />
+                          <div className="container-fluid">
+                              <Routes childProps={childProps} />
+                          </div>
+                        </React.Fragment>
+                    </AppProvider>
                 )}}
             </Query>
         );

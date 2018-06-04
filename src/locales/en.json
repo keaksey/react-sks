@@ -1,0 +1,9 @@
+
+{
+  "I18n": {
+    "Avatar": {
+      "label": "Avatar",
+      "labelWithInitials": "Avatar with initials {initials}"
+    }
+  }
+}

@@ -1,11 +1,25 @@
+// @flow
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
+import classNames from 'classnames'
 
-const Link = (props) => {
+type Props = {
+    className?: string,
+    children?: React.Node,
+    type?: string,
+    to: string
+};
+const Link = (props: Props) => {
+    let klassName = props.className ? props.className.split(' ') : null;
+    
+    klassName = classNames(
+        klassName, 
+        props.type === 'button' ? 'btn': ''
+    );
     
     return (
         <RouterLink to={props.to} 
-            className={`${props.type === 'button' ? 'btn': ''} ${props.className || ''}`}
+            className={`${klassName}`}
         >
             {props.children}
         </RouterLink>

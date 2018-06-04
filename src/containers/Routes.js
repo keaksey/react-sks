@@ -8,16 +8,25 @@ import {
 
 import Loadable from 'react-loadable'
 import { LoadingPage, NotFound404 } from './../components'
-import { UnauthenticatedRoute } from './../components/Routes'
+import { AuthenticatedRoute, UnauthenticatedRoute } from './../components/Routes'
 
-const AsyncAppLogin = Loadable({
+const MyLoadable = ({loader, loading}: any) => {
+    return Loadable({
+      loader: loader,
+      loading: loading ? loading : () => <LoadingPage />
+  })
+}
+
+const AsyncAppLogin = MyLoadable({
     loader: () => import("./Account").then((c) => c.Login),
-    loading: () => <LoadingPage />
 })
 
-const AsyncStoreFront = Loadable({
-    loader: () => import("./StoreFront"),
-    loading: () => <LoadingPage />
+const AsyncStoreFront = MyLoadable({
+    loader: () => import("./StoreFront")
+})
+
+const AsyncYourAccount = MyLoadable({
+    loader: () => import("./Account")
 })
 
 export default function Routes({ childProps }: any) {
@@ -27,6 +36,11 @@ export default function Routes({ childProps }: any) {
             <UnauthenticatedRoute 
               exact path="/" 
               component={AsyncStoreFront}
+              props={childProps}
+            />
+            <AuthenticatedRoute 
+              exact path="/your/account"
+              component={AsyncYourAccount}
               props={childProps}
             />
             <UnauthenticatedRoute 
