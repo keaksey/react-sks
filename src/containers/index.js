@@ -23,14 +23,13 @@ class App extends Component<Props> {
         return (
             <Query query={Users.CURRENT_USER_QUERY}>
                 {(result) => {
-                  let { refetch, client, loading, data } = result;
+                  let { refetch, loading, data } = result;
                   if ( loading ) return <div>Loaind.... </div>;
-                  //console.log('result ', result);
                   
                   const childProps = {
-                    ...data,
-                    gqlRefetch: refetch,
-                    history
+                      ...data,
+                      gqlRefetch: refetch,
+                      history
                   }
                   
                   return (

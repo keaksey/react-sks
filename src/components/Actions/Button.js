@@ -7,7 +7,7 @@ type Props = {
     className?: string,
     disabled?: bool,
     loading?: bool,
-    children?: React.Node,
+    children?: PropTypes.Node,
     type?: string,
     onClick?: PropTypes.func,
     plain?: bool

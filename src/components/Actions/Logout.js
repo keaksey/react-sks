@@ -8,7 +8,7 @@ import {withAppProvider} from './../AppProvider'
 
 type Props = {
     className?: string,
-    children?: React.Node,
+    children?: PropTypes.Node,
     type?: string,
     history: PropTypes.object.isRequired,
     gqlClient: PropTypes.object
@@ -18,7 +18,7 @@ class Logout extends React.PureComponent<Props> {
     
     handleLogout = () => {
         localStorage.removeItem(AUTH_TOKEN);
-        this.props.gqlClient.resetStore();
+        this.props.gqlClient.client.resetStore();
         this.props.history.push('/');
     }
     

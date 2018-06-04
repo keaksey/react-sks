@@ -21,6 +21,10 @@ const AsyncAppLogin = MyLoadable({
     loader: () => import("./Account").then((c) => c.Login),
 })
 
+const AsyncAppSignup = MyLoadable({
+    loader: () => import("./Account").then((c) => c.Signup),
+})
+
 const AsyncStoreFront = MyLoadable({
     loader: () => import("./StoreFront")
 })
@@ -46,6 +50,11 @@ export default function Routes({ childProps }: any) {
             <UnauthenticatedRoute 
               exact path="/account/login" 
               component={AsyncAppLogin}
+              props={childProps}
+            />
+            <UnauthenticatedRoute 
+              exact path="/account/signup"
+              component={AsyncAppSignup}
               props={childProps}
             />
             <Route component={NotFound404} />

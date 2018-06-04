@@ -4,16 +4,16 @@ import PropTypes from 'prop-types'
 import { Button, Link, Logout } from './../Actions'
 
 type Props = {
-    userCurrent: PropTypes.object,
+    currentUser: PropTypes.object,
     gqlClient: PropTypes.object
 };
 class Navbar extends Component<Props> {
     
     render() {
         
-        const user = this.props.userCurrent;
+        const user = this.props.currentUser;
         
-        //console.log('userCurrent ', this.props);
+        //console.log('currentUser ', this.props);
         
         return (
             <nav className="navbar navbar-expand-sm fixed-top navbar-light bg-light">

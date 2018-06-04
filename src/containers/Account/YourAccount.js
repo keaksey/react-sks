@@ -1,12 +1,18 @@
 // @flow
 import React from 'react'
+import PropTypes from 'prop-types'
 
-class YourAccount extends React.Component<{}> {
+type Props = {
+    currentUser: PropTypes.object
+};
+class YourAccount extends React.Component<Props> {
     
     render() {
+        const user = this.props.currentUser;
+        
         return (
             <section className="container">
-                class
+                {user.username}
             </section>
         )
     }

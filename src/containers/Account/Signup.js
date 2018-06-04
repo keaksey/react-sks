@@ -4,36 +4,26 @@ import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 import { Field } from 'redux-form'
 
-import { AUTH_TOKEN } from './../../constants'
 import { Forms, Button } from './../../components'
 import { Users } from './../../graphql'
 
 type Props = {
-    tokenCreate: PropTypes.func,
     handleSubmit: PropTypes.func,
-    submitting: bool,
     dirty: bool,
-    startSubmit: PropTypes.func,
-    stopSubmit: PropTypes.func,
-    formErrors: any,
-    history: PropTypes.object,
-    gqlRefetch: PropTypes.func
+    history: PropTypes.func
 };
-
-class Login extends Component<Props> {
+class Signup extends Component<Props> {
     
-    handleCompleted = ({ tokenCreate: { token, errors } }) => {
-        if ( token && !errors ) {
-            localStorage.setItem(AUTH_TOKEN, token);
-            this.props.gqlRefetch();
-            this.props.history.replace({pathname: `/`});
+    handleCompleted = ({ userRegister: { errors } }) => {
+        if ( !errors ) {
+            this.props.history.push(`/account/login`);
         }
     }
     
     render() {
         const { 
-            handleSubmit,
-            dirty
+            handleSubmit, 
+            dirty 
         } = this.props;
         
         return (
@@ -42,20 +32,20 @@ class Login extends Component<Props> {
                     <div className="col-md-6 mx-auto">
                         <div className="card rounded-0">
                             <div className="card-header">
-                                <h3 className="mb-0">Login</h3>
+                                <h3 className="mb-0">Signup</h3>
                             </div>
                             <div className="card-body">
                                 <Mutation
-                                    mutation={Users.LOGIN_MUTATION}
+                                    mutation={Users.USER_REGISTER}
                                     onCompleted={this.handleCompleted}
                                 >
-                                    {((tokenCreate, {loading, data} ) =>
+                                    {((userRegister, {loading, data} ) =>
                                         <Forms.ReduxForm
                                             handleSubmit={handleSubmit}
                                             onSubmit={(field) => {
-                                                tokenCreate({variables: field});
+                                                userRegister({variables: field});
                                             }}
-                                            errors={data && data.tokenCreate}
+                                            errors={data && data.userRegister}
                                         >
                                             <Field 
                                                 component={Forms.renderField}
@@ -65,21 +55,28 @@ class Login extends Component<Props> {
                                                 inputClassName="rounded-0"
                                                 size="lg"
                                             />
-                                            <Field 
+                                            <Field
                                                 component={Forms.renderField}
-                                                name="password"
+                                                name="password1"
                                                 type="password"
                                                 label="Password"
                                                 inputClassName="rounded-0"
                                                 size="lg"
                                             />
-                                            <Button 
-                                                type="submit" 
+                                            <Field
+                                                component={Forms.renderField}
+                                                name="password2"
+                                                type="password"
+                                                label="Re-Password"
+                                                inputClassName="rounded-0"
+                                                size="lg"
+                                            />
+                                            <Button type="submit"
                                                 className="btn-primary btn-lg float-right"
                                                 disabled={!dirty}
                                                 loading={loading}
                                             >
-                                                Login
+                                                Signup
                                             </Button>
                                         </Forms.ReduxForm>
                                     )}
@@ -94,13 +91,8 @@ class Login extends Component<Props> {
 }
 
 // eslint-disable-next-line
-Login = Forms.withForm({
-    form: 'LoginForm'
-}, null)(Login)
+Signup = Forms.withForm({
+    form: 'signupForm'
+}, null)(Signup)
 
-export default Login
-
-// compose(
-//     graphql(Users.LOGIN_MUTATION, { name: 'tokenCreate' })
-// )(Login)
-
+export default Signup

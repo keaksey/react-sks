@@ -35,7 +35,7 @@ export function AuthenticatedRoute({ component: C, props: cProps, ...rest }: any
         <Route
             {...rest}
             render={(params: any) => {
-                if ( !cProps.userCurrent.isAuthenticated ){
+                if ( !cProps.currentUser.isAuthenticated ){
                     return (<Redirect to={`/account/login?next=${redirect}`} />)
                 }
                 

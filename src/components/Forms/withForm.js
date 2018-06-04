@@ -64,7 +64,7 @@ const withForm = (formProps: FromProps, reduxProps: ReduxProps) =>
             return stateTopProps;
         }
         
-        return connect(mapStateToProps)(HOC)
+        return reduxProps === null ? HOC : connect(mapStateToProps)(HOC)
     }
 
 export default withForm
