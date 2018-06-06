@@ -5,7 +5,8 @@ import { Button, Link, Logout } from './../Actions'
 
 type Props = {
     currentUser: PropTypes.object,
-    gqlClient: PropTypes.object
+    gqlClient: PropTypes.object,
+    history: PropTypes.object
 };
 class Navbar extends Component<Props> {
     
@@ -28,6 +29,9 @@ class Navbar extends Component<Props> {
                         </li>
                     </ul>
                     <div className="my-2 my-lg-0">
+                        {!user.isAuthenticated &&
+                            <Link to={'/your/shop/create'} className="my-2 mr-3 my-sm-0">Sell on our</Link>
+                        }
                         {user.isAuthenticated 
                             ? <Link to={'/your/account'} className="my-2 mr-3 my-sm-0">{user.username}</Link>
                             : <Link 

@@ -8,7 +8,11 @@ import {
 
 import Loadable from 'react-loadable'
 import { LoadingPage, NotFound404 } from './../components'
-import { AuthenticatedRoute, UnauthenticatedRoute } from './../components/Routes'
+import { 
+  AuthenticatedRoute, 
+  UnauthenticatedRoute, 
+  AppliedRoute 
+} from './../components/Routes'
 
 const MyLoadable = ({loader, loading}: any) => {
     return Loadable({
@@ -33,11 +37,15 @@ const AsyncYourAccount = MyLoadable({
     loader: () => import("./Account")
 })
 
+const AsyncShopCreate = MyLoadable({
+    loader: () => import("./Shop/ShopCreate")
+})
+
 export default function Routes({ childProps }: any) {
   
     return (
         <Switch>
-            <UnauthenticatedRoute 
+            <AppliedRoute 
               exact path="/" 
               component={AsyncStoreFront}
               props={childProps}
@@ -55,6 +63,11 @@ export default function Routes({ childProps }: any) {
             <UnauthenticatedRoute 
               exact path="/account/signup"
               component={AsyncAppSignup}
+              props={childProps}
+            />
+            <AuthenticatedRoute 
+              exact path="/your/shop/create"
+              component={AsyncShopCreate}
               props={childProps}
             />
             <Route component={NotFound404} />

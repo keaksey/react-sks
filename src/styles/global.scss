@@ -1,3 +1,9 @@
+@import 'polaris';
+
+html {
+    font-size: 80.5%;
+}
+
 .btn {
     &.disabled {
         pointer-events: none;

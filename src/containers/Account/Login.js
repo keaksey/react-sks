@@ -6,6 +6,8 @@ import { Field } from 'redux-form'
 
 import { AUTH_TOKEN } from './../../constants'
 import { Forms, Button } from './../../components'
+import { replaceRoute } from './../../components/Routes'
+
 import { Users } from './../../graphql'
 
 type Props = {
@@ -17,6 +19,7 @@ type Props = {
     stopSubmit: PropTypes.func,
     formErrors: any,
     history: PropTypes.object,
+    location: PropTypes.object,
     gqlRefetch: PropTypes.func
 };
 
@@ -26,7 +29,7 @@ class Login extends Component<Props> {
         if ( token && !errors ) {
             localStorage.setItem(AUTH_TOKEN, token);
             this.props.gqlRefetch();
-            this.props.history.replace({pathname: `/`});
+            replaceRoute(this.props, '/')
         }
     }
     

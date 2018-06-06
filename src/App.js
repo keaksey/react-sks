@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
+import { AppProvider as  PolarisAppProvider } from '@shopify/polaris'
 
 import Routes from './Routes'
 import configureStore from './redux/store'
@@ -15,7 +16,9 @@ class App extends Component<{}>{
         return (
             <Provider store={store}>
                 <ApolloProvider client={client}>
-                    <Routes />
+                    <PolarisAppProvider>
+                        <Routes />
+                    </PolarisAppProvider>
                 </ApolloProvider>
             </Provider>
         );
