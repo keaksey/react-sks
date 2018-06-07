@@ -13,6 +13,7 @@ class Navbar extends Component<Props> {
     render() {
         
         const user = this.props.currentUser;
+        const shop = user.shop;
         
         //console.log('currentUser ', this.props);
         
@@ -29,6 +30,9 @@ class Navbar extends Component<Props> {
                         </li>
                     </ul>
                     <div className="my-2 my-lg-0">
+                        {shop.isOwner &&
+                            <Link to={'/your/shop'} className="btn btn-outline-primary my-2 mr-3 my-sm-0">Your Shop</Link>
+                        }
                         {!user.isAuthenticated &&
                             <Link to={'/your/shop/create'} className="my-2 mr-3 my-sm-0">Sell on our</Link>
                         }

@@ -11,8 +11,13 @@ import { LoadingPage, NotFound404 } from './../components'
 import { 
   AuthenticatedRoute, 
   UnauthenticatedRoute, 
-  AppliedRoute 
+  AppliedRoute,
+  PermissionRoute
 } from './../components/Routes'
+
+import {
+  showOwnerPermission
+} from './Shop/Permission'
 
 const MyLoadable = ({loader, loading}: any) => {
     return Loadable({
@@ -41,6 +46,10 @@ const AsyncShopCreate = MyLoadable({
     loader: () => import("./Shop/ShopCreate")
 })
 
+const AsyncShop = MyLoadable({
+    loader: () => import("./Shop").then((e) => e.Shop)
+})
+
 export default function Routes({ childProps }: any) {
   
     return (
@@ -64,6 +73,12 @@ export default function Routes({ childProps }: any) {
               exact path="/account/signup"
               component={AsyncAppSignup}
               props={childProps}
+            />
+            <PermissionRoute 
+              exact path="/your/shop"
+              component={AsyncShop}
+              props={childProps}
+              permission={showOwnerPermission}
             />
             <AuthenticatedRoute 
               exact path="/your/shop/create"

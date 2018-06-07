@@ -8,6 +8,12 @@ export const CURRENT_USER_QUERY = gql`
             username
             name
             isAuthenticated
+            shop {
+                id
+                name
+                domain
+                isOwner
+            }
         }
     }
 `

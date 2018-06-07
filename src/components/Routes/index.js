@@ -72,3 +72,21 @@ export function AppliedRoute({ component: C, props: cProps, ...rest }: any) {
         }} />
     );
 }
+
+export function PermissionRoute(props: any) {
+    const { currentUser } = props.props;
+    
+    if ( props.permission && props.permission(currentUser) ) {
+        return <AppliedRoute {...props} />
+    }
+    
+    if ( !currentUser.isAuthenticated ) {
+        return <AuthenticatedRoute {...props} />
+    }
+    
+    return (
+        <h1 className="text-center py-5">No permission</h1>
+    )
+}
+
+

@@ -2,6 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
+import {
+    TextField
+} from '@shopify/polaris'
+
 export { default as withForm} from './withForm'
 export { default as ReduxForm } from './Form'
 
@@ -14,7 +18,7 @@ export const renderField = (props: propsTypes) =>{
         type,
         label,
         placeholder, 
-        size, 
+        size,
         // prefix, 
         // helpText, 
         // labelAction,
@@ -23,7 +27,8 @@ export const renderField = (props: propsTypes) =>{
         // connectedRight,
         // readOnly,
         //meta: { touched, error },
-        inputClassName
+        inputClassName,
+        polaris
     } = props;
     inputClassName = inputClassName ? inputClassName.split(' ') : '';
     
@@ -34,6 +39,12 @@ export const renderField = (props: propsTypes) =>{
     );
     
     const inputId = `id-${input.name}`;
+    
+    if ( polaris ) {
+        return (
+            <TextField {...input} label={label} type={type || 'text'} />
+        )
+    }
     
     return (
         <div className={`${'form-group '} ${type !== 'hidden' ? '': 'd-none'}`}>

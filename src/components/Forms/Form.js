@@ -2,12 +2,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
+import {
+    Banner
+} from '@shopify/polaris'
 
 type Props = {
     children?: PropTypes.Node,
     handleSubmit: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    errors: PropTypes.object | PropTypes.array
+    errors: PropTypes.object | PropTypes.array,
+    formErrors: PropTypes.object | PropTypes.array
 };
 class Form extends React.PureComponent<Props>{
     
@@ -20,8 +24,8 @@ class Form extends React.PureComponent<Props>{
     }
     
     render() {
-        const { errors, handleSubmit, onSubmit } = this.props;
-        let formErrors = this.getErrors(errors);
+        let { formErrors, errors, handleSubmit, onSubmit } = this.props;
+        formErrors = this.getErrors(formErrors);
         
         return (
             <form className="form"
@@ -32,11 +36,25 @@ class Form extends React.PureComponent<Props>{
                     handleSubmit(onSubmit)()
                 }}
             >
+                {isEmpty(formErrors) && errors && 
+                    <div className="mb-4">
+                        <Banner status="critical"
+                            title="High risk of fraud detected"
+                        >
+                        </Banner>
+                    </div>
+                }
                 {!isEmpty(formErrors) &&
-                    <div className="alert alert-danger" role="alert">
-                        <ul>
-                            {formErrors.map((item, i) => <li key={i}>{item.message}</li>)}
-                        </ul>
+                    <div className="mb-4">
+                        <Banner status="critical">
+                            <ul>
+                                {formErrors.map((item, i) => 
+                                    <li key={i}>
+                                        {item.field} {item.message || (item.messages && item.messages[0])}
+                                    </li>
+                                )}
+                            </ul>
+                        </Banner>
                     </div>
                 }
                 {this.props.children}
