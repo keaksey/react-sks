@@ -13,13 +13,14 @@ import {
 } from '@shopify/polaris'
 
 import { Mutation } from 'react-apollo'
+import { Redirect } from "react-router-dom"
 
 import { Forms } from './../../components'
-
 import { Shop } from './../../graphql'
 
 type Props = {
-    handleSubmit: PropTypes.func
+    handleSubmit: PropTypes.func,
+    currentUser: PropTypes.object
 };
 class ShopCreate extends React.Component<Props> {
     
@@ -28,7 +29,14 @@ class ShopCreate extends React.Component<Props> {
     };
     
     render() {
-        const { handleSubmit } = this.props;
+        const { handleSubmit, currentUser } = this.props;
+        const { shop } = currentUser;
+        
+        if ( shop.isOwner ) {
+            return (
+                <Redirect to={`/shop/${shop.domain}`} />
+            )
+        }
         
         return (
             <section className="section-wrapper pt-5">

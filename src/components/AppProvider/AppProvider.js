@@ -9,7 +9,8 @@ import {I18nAppProviderContextTypes, TranslationDictionary} from './types'
 export type Props = {
   /** A locale object or array of locale objects that overrides default translations */
   i18n?: TranslationDictionary | TranslationDictionary[],
-  gqlClient?: PropTypes.object
+  gqlClient?: PropTypes.object,
+  children: PropTypes.Node
 };
 
 export type Context = {
@@ -28,7 +29,7 @@ export default class AppProvider extends React.Component<Props> {
         });
     }
     
-    componentWillReceiveProps({i18n, gqlClient}: Props) {
+    UNSAFE_componentWillReceiveProps({i18n, gqlClient}: Props) {
         if (i18n !== this.props.i18n) {
           this.i18nContext = createI18nContext({i18n, gqlClient});
         }
