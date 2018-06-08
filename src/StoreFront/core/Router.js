@@ -6,9 +6,11 @@ import { Route } from "react-router-dom"
 
 export function AppliedRoute({ component: C, props: cProps, ...rest }: any) {
     
+    //const { currentTheme } = cProps.shop;
+    
     return (
         <Route {...rest} render={props => {
-            return <C {...props} {...cProps} />;
+            return <C {...props} {...cProps} />
         }} />
     );
 }

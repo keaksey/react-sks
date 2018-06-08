@@ -7,55 +7,53 @@ import Routes from './Routes'
 import { Users } from './../graphql'
 import AppProvider from './../components/AppProvider'
 import { Navbar } from './../components'
+import StoreProvider from './core/StoreProvider'
 
 type Props = {
-    history: PropTypes.object
+    history: PropTypes.object,
+    match: PropTypes.object
 };
 class StoreFront extends React.Component<Props>{
     
     render() {
-        const { history } = this.props;
+        const { history, match } = this.props;
         
         let routeProps = {
             childProps: {
                 ...this.props
-            },
-            theme: {
-                name: 'SreyKeo',
-                path: './Themes/SreyKeo'
             }
         }
         
         return (
-            <AppProvider>
-                <Query query={Users.CURRENT_USER_QUERY}>
-                    {(result) => {
-                      let { refetch, loading, data } = result;
-                      if ( loading ) return <div>Loaind.... </div>;
-                      
-                      const childProps = {
-                          ...data,
-                          gqlRefetch: refetch,
-                          history
-                      }
-                      
-                      routeProps.childProps = {
-                        ...routeProps.childProps,
-                        ...childProps
-                      }
-                      
-                      return (
-                        <AppProvider gqlClient={result}>
-                            <React.Fragment>
-                              <Navbar {...childProps} />
-                              <div className="container-fluid">
-                                  <Routes {...routeProps} />
-                              </div>
-                            </React.Fragment>
-                        </AppProvider>
-                    )}}
-                </Query>
-            </AppProvider>
+              <Query query={Users.CURRENT_USER_QUERY}>
+                  {(result) => {
+                    var { refetch, loading, data } = result;
+                    if ( loading ) return <div>Loaind.... </div>;
+                    
+                    const childProps = {
+                        ...data,
+                        gqlRefetch: refetch,
+                        history
+                    }
+                    
+                    routeProps.childProps = {
+                      ...routeProps.childProps,
+                      ...childProps
+                    }
+                    
+                    return (
+                      <AppProvider gqlClient={result}>
+                          <React.Fragment>
+                            <Navbar {...childProps} />
+                            <div className="container-fluid">
+                                <StoreProvider domain={match.params.domain}>
+                                  {(shop) => <Routes shop={shop} {...routeProps} />}
+                                </StoreProvider>
+                            </div>
+                          </React.Fragment>
+                      </AppProvider>
+                  )}}
+              </Query>
         )
     }
 }

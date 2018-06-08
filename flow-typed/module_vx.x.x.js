@@ -62,3 +62,6 @@ declare module "@shopify/polaris" {
     declare module.exports: any;
 }
 
+declare module "styled-components" {
+    declare module.exports: any;
+}

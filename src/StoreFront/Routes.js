@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import {
   Route,
@@ -7,6 +8,7 @@ import {
 } from 'react-router-dom'
 
 import Loadable from 'react-loadable'
+import { ThemeProvider } from 'styled-components'
 
 import {
     ShopRoute,
@@ -32,35 +34,76 @@ const myImport = async (path, name) =>{
     return theme[name]
 }
 
-export default function Routes({ childProps, theme }: any) {
-    const { match } = childProps;
+type Props = {
+    childProps: PropTypes.object,
+    shop: PropTypes.object
+};
+export default class Routes extends React.PureComponent<Props, any> {
+    constructor(props: any) {
+        super(props);
+        
+        this.state = {
+            themeStyle: {},
+            styleLoading: true
+        };
+    }
     
-    const themeRoot = MyLoadable({
-        loader: () => myImport(theme.path, 'ThemeRoot')
-    })
+    loadThemeStyle = (themePath: string) => {
+        
+        myImport(themePath, 'Themes').then((themeStyle) =>{
+            this.setState({themeStyle, styleLoading: false});
+        })
+    };
     
-    const themeProduct = MyLoadable({
-        loader: () => myImport(theme.path, 'Product')
-    })
+    componentDidMount() {
+        let { shop } = this.props;
+        const themePath = `./Themes${shop.currentTheme.src}`
+        
+        this.loadThemeStyle(themePath);
+    }
     
-    return (
-        <Switch>
-            <ShopRoute 
-                exact path={match.path} 
-                component={themeRoot}
-                props={childProps}
-            />
-            <ProductRoute 
-                exact path={`${match.path}/products/:handle`}
-                component={themeProduct}
-                props={childProps}
-            />
-            <CollectionRoute 
-                exact path={`${match.path}/collections/:handle`}
-                component={themeProduct}
-                props={childProps}
-            />
-            <Route component={NotFound404} />
-        </Switch>
-    )
+    render() {
+        let { childProps, shop } = this.props;
+        
+        const { match } = childProps;
+        childProps  = {...childProps, shop};
+        
+        const theme = shop.currentTheme;
+        const themePath = `./Themes${theme.src}`
+        
+        const themeRoot = MyLoadable({
+            loader: () => myImport(themePath, 'ThemeRoot')
+        })
+        
+        const themeProduct = MyLoadable({
+            loader: () => myImport(themePath, 'Product')
+        })
+        
+        if ( this.state.styleLoading ){
+            return <div>Shop loading...</div>
+        }
+        
+        return (
+            <ThemeProvider theme={this.state.themeStyle}>
+                <Switch>
+                    <ShopRoute 
+                        exact path={match.path} 
+                        component={themeRoot}
+                        props={childProps}
+                    />
+                    <ProductRoute 
+                        exact path={`${match.path}/products/:handle`}
+                        component={themeProduct}
+                        props={childProps}
+                    />
+                    <CollectionRoute 
+                        exact path={`${match.path}/collections/:handle`}
+                        component={themeProduct}
+                        props={childProps}
+                    />
+                    <Route component={NotFound404} />
+                </Switch>
+            </ThemeProvider>
+        )
+    }
 }
