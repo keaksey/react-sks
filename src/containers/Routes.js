@@ -6,25 +6,12 @@ import {
   Switch
 } from 'react-router-dom'
 
-import Loadable from 'react-loadable'
-import { LoadingPage, NotFound404 } from './../components'
+import { NotFound404, MyLoadable } from './../components'
 import { 
   AuthenticatedRoute, 
   UnauthenticatedRoute, 
-  AppliedRoute,
-  PermissionRoute
+  AppliedRoute
 } from './../components/Routes'
-
-import {
-  showOwnerPermission
-} from './Shop/Permission'
-
-const MyLoadable = ({loader, loading}: any) => {
-    return Loadable({
-      loader: loader,
-      loading: loading ? loading : () => <LoadingPage />
-  })
-}
 
 const AsyncAppLogin = MyLoadable({
     loader: () => import("./Account").then((c) => c.Login),
@@ -38,16 +25,12 @@ const AsyncStoreFront = MyLoadable({
     loader: () => import("./StoreFront")
 })
 
-const AsyncYourAccount = MyLoadable({
-    loader: () => import("./Account")
-})
-
 const AsyncShopCreate = MyLoadable({
-    loader: () => import("./Shop/ShopCreate")
+    loader: () => import("./Dashboard/ShopCreate")
 })
 
-const AsyncShop = MyLoadable({
-    loader: () => import("./Shop").then((e) => e.Shop)
+const AsyncDashboard = MyLoadable({
+    loader: () => import("./Dashboard")
 })
 
 export default function Routes({ childProps }: any) {
@@ -57,11 +40,6 @@ export default function Routes({ childProps }: any) {
             <AppliedRoute 
               exact path="/" 
               component={AsyncStoreFront}
-              props={childProps}
-            />
-            <AuthenticatedRoute 
-              exact path="/your/account"
-              component={AsyncYourAccount}
               props={childProps}
             />
             <UnauthenticatedRoute 
@@ -74,15 +52,14 @@ export default function Routes({ childProps }: any) {
               component={AsyncAppSignup}
               props={childProps}
             />
-            <PermissionRoute 
-              exact path="/your/shop"
-              component={AsyncShop}
-              props={childProps}
-              permission={showOwnerPermission}
-            />
             <AuthenticatedRoute 
               exact path="/your/shop/create"
               component={AsyncShopCreate}
+              props={childProps}
+            />
+            <AuthenticatedRoute 
+              path="/your"
+              component={AsyncDashboard}
               props={childProps}
             />
             <Route component={NotFound404} />

@@ -1,0 +1,67 @@
+.dashboard_content{
+    
+    .Polaris-Page__Header{
+        & > .Polaris-Page__Actions{
+            display: none;
+        }
+        
+        .Polaris-DisplayText {
+            font-size: 2.2rem;
+        }
+    }
+    
+    .Polaris-Page__Content{
+        margin-top: 1rem;
+    }
+    
+    .Polaris-Page{
+        @media (min-width: 46.5em){
+            padding: 0 1.2rem;
+            
+            .Polaris-Page__Header{
+                padding-top: 1.2rem;
+            }
+        }
+    }
+    
+}
+
+
+.tabs-menus{
+    .tabs-parent-menu {
+        .Polaris-Tabs__Tab {
+            text-decoration: none;
+            font-size: 1.6rem;
+        }
+    }
+    
+    .Polaris-Tabs__TabContainer {
+        .Polaris-Tabs__Tab {
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+    }
+    
+    .Polaris-Tabs__Tab--selected{
+        color: #000;
+    }
+    
+    .tabs-child-menu {
+        
+        .Polaris-Tabs {
+            border-bottom: 0px;
+            padding-left: 5px;
+        }
+        
+        .Polaris-Tabs__Tab {
+            text-decoration: none;
+            
+            .Polaris-Tabs__Title {
+                padding-top: 0.8rem;
+                padding-bottom: 0.8rem;
+                border-bottom-width: 0.2rem;
+            }
+        }
+    }
+    
+}
