@@ -22,7 +22,7 @@ const AsyncAppSignup = MyLoadable({
 })
 
 const AsyncStoreFront = MyLoadable({
-    loader: () => import("./StoreFront")
+    loader: () => import("./FrontPage")
 })
 
 const AsyncShopCreate = MyLoadable({

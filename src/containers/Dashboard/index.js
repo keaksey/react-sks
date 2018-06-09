@@ -7,7 +7,8 @@ import {
 } from '@shopify/polaris'
 
 import {
-    MenuTabs
+    MenuTabs,
+    SideBar
 } from './components'
 
 import Routes from './Routes'
@@ -23,12 +24,14 @@ class Shop extends React.Component<Props> {
         
         return (
             <section className="section-wrapper pt-5 container">
-                <Page fullWidth>
-                    <MenuTabs {...this.props} />
-                    <div className="dashboard_content">
+                <div className="row">
+                    <div className="col-3">
+                        <SideBar {...this.props} />
+                    </div>
+                    <div className="col-9 dashboard_content">
                         <Routes childProps={{...this.props}}/>
                     </div>
-                </Page>
+                </div>
             </section>
         )
     }
