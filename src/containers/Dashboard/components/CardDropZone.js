@@ -6,29 +6,32 @@ import {
     Thumbnail,
     Stack,
     DropZone,
-    Caption
+    Caption,
+    Card
 } from '@shopify/polaris'
 
 type State = {
-    files: PropTypes.array
+    files: PropTypes.array,
+    openFileDialog: bool
 };
 class CardDropZone extends React.Component<{}, State> {
   constructor(props: any) {
       super(props);
       
       this.state = {
-          files: []
+          files: [],
+          openFileDialog: false
       }
   }
+  
   render() {
-    const {files} = this.state;
+    const { files, openFileDialog } = this.state;
     const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
-
-    const fileUpload = !files.length && <DropZone.FileUpload />;
+    
     const uploadedFiles = files.length > 0 && (
       <Stack vertical>
         {files.map((file, i) => (
-          <Stack alignment="center" key={+new Date()}>
+          <Stack alignment="center" key={i}>
             <Thumbnail
               size="small"
               alt={file.name}
@@ -47,14 +50,27 @@ class CardDropZone extends React.Component<{}, State> {
     );
     
     return (
-      <DropZone
-        onDrop={(files) => {
-          this.setState({files: [...this.state.files, ...files]});
-        }}
+      <Card title="Images" actions={[{
+          content: 'Upload Image',
+          onAction: () => {
+              this.setState({openFileDialog: true});
+          }
+        }]}
       >
-        {uploadedFiles}
-        {fileUpload}
-      </DropZone>
+        <Card.Section>
+          <DropZone
+            openFileDialog={openFileDialog}
+            onDrop={(files) => {
+              this.setState({files: [...this.state.files, ...files]});
+            }}
+            onFileDialogClose={() => {
+              this.setState({openFileDialog: false});
+            }}
+          >
+            {uploadedFiles}
+          </DropZone>
+        </Card.Section>
+      </Card>
     );
   }
 }

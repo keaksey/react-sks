@@ -65,3 +65,8 @@ declare module "@shopify/polaris" {
 declare module "styled-components" {
     declare module.exports: any;
 }
+
+declare module "react-tinymce" {
+    declare module.exports: any;
+}
+

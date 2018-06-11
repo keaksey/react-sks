@@ -8,10 +8,12 @@ import {
     Select,
     PageActions,
     Checkbox,
-    DisplayText
+    DisplayText,
+    Stack
 } from '@shopify/polaris'
 
 import { CardDropZone } from './../../components'
+import { Forms } from './../../../../components'
 
 class Form extends React.Component<{}>{
     
@@ -28,37 +30,25 @@ class Form extends React.Component<{}>{
             >
                 <Card>
                     <Card.Section>
-                        <div className="row">
-                            <div className="col-8">
+                        <Stack vertical>
+                            <Stack.Item>
                                 <FormLayout>
                                     <TextField label="Title" />
-                                    <TextField multiline={true} label="Description" />
+                                    <Forms.TextareaEditor />
                                 </FormLayout>
-                            </div>
-                            <div className="col-4">
-                                <div>
-                                    <DisplayText size="small">Visibility</DisplayText>
-                                    <FormLayout>
-                                        <Checkbox
-                                            checked={true}
-                                            label="PUBLISHED"
-                                          />
-                                    </FormLayout>
-                                </div>
-                                <div className="mt-2">
-                                    <DisplayText size="small" element="h3">Organization</DisplayText>
-                                    <TextField label="Product type" />
-                                    <TextField label="Product type" />
-                                </div>
-                            </div>
-                        </div>
+                            </Stack.Item>
+                            <Stack.Item>
+                                <FormLayout>
+                                    <FormLayout.Group>
+                                        <TextField label="Product type" />
+                                        <TextField label="Product type" />
+                                    </FormLayout.Group>
+                                </FormLayout>
+                            </Stack.Item>
+                        </Stack>
                     </Card.Section>
                 </Card>
-                <Card title="Images" actions={[{content: 'Upload Image'}]}>
-                    <Card.Section>
-                        <CardDropZone />
-                    </Card.Section>
-                </Card>
+                <CardDropZone />
                 <Card title="Price">
                     <Card.Section>
                         <FormLayout>
@@ -69,26 +59,35 @@ class Form extends React.Component<{}>{
                         </FormLayout>
                     </Card.Section>
                     <Card.Section>
-                        <FormLayout>
-                            <FormLayout.Group>
-                                <TextField label="SKU (Stock Keeping Unit)" />
-                                <TextField label="Barcode (ISBN, UPC, GTIN, etc.)" />
-                            </FormLayout.Group>
-                        </FormLayout>
-                        <div className="mt-5 w-50">
-                            <FormLayout>
-                                <Select
-                                    label="Inventory policy"
-                                    options={[{
-                                        label: "Don't track inventory",
-                                        value: ''
-                                    },{
-                                        label: "Shopify tracks this product's inventory",
-                                        value: 'bns'
-                                    }]}
-                                />
-                            </FormLayout>
-                        </div>
+                        <Stack vertical>
+                            <Stack.Item>
+                                <FormLayout>
+                                    <FormLayout.Group>
+                                        <TextField label="SKU (Stock Keeping Unit)" />
+                                        <TextField label="Barcode (ISBN, UPC, GTIN, etc.)" />
+                                    </FormLayout.Group>
+                                </FormLayout>
+                            </Stack.Item>
+                            <Stack.Item>
+                                <FormLayout>
+                                    <FormLayout.Group>
+                                        <Select
+                                            label="Inventory policy"
+                                            options={[{
+                                                label: "Don't track inventory",
+                                                value: ''
+                                            },{
+                                                label: "Shopify tracks this product's inventory",
+                                                value: 'bns'
+                                            }]}
+                                        />
+                                        <div>
+                                            <TextField label="Quantity" type="number" />
+                                        </div>
+                                    </FormLayout.Group>
+                                </FormLayout>
+                            </Stack.Item>
+                        </Stack>
                     </Card.Section>
                 </Card>
                 <div className="mt-5">
