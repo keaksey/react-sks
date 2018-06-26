@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom'
 
 import Loadable from 'react-loadable'
-import { ThemeProvider } from 'styled-components'
 
 import {
     ShopRoute,
@@ -48,18 +47,18 @@ export default class Routes extends React.PureComponent<Props, any> {
         };
     }
     
-    loadThemeStyle = (themePath: string) => {
+    // loadThemeStyle = (themePath: string) => {
         
-        myImport(themePath, 'Themes').then((themeStyle) =>{
-            this.setState({themeStyle, styleLoading: false});
-        })
-    };
+    //     myImport(themePath, 'Themes').then((themeStyle) =>{
+    //         this.setState({themeStyle, styleLoading: false});
+    //     })
+    // };
     
     componentDidMount() {
         let { shop } = this.props;
         const themePath = `./Themes${shop.currentTheme.src}`
         
-        this.loadThemeStyle(themePath);
+        // this.loadThemeStyle(themePath);
     }
     
     render() {
@@ -84,26 +83,24 @@ export default class Routes extends React.PureComponent<Props, any> {
         }
         
         return (
-            <ThemeProvider theme={this.state.themeStyle}>
-                <Switch>
-                    <ShopRoute 
-                        exact path={match.path} 
-                        component={themeRoot}
-                        props={childProps}
-                    />
-                    <ProductRoute 
-                        exact path={`${match.path}/products/:handle`}
-                        component={themeProduct}
-                        props={childProps}
-                    />
-                    <CollectionRoute 
-                        exact path={`${match.path}/collections/:handle`}
-                        component={themeProduct}
-                        props={childProps}
-                    />
-                    <Route component={NotFound404} />
-                </Switch>
-            </ThemeProvider>
+            <Switch>
+                <ShopRoute 
+                    exact path={match.path} 
+                    component={themeRoot}
+                    props={childProps}
+                />
+                <ProductRoute 
+                    exact path={`${match.path}/products/:handle`}
+                    component={themeProduct}
+                    props={childProps}
+                />
+                <CollectionRoute 
+                    exact path={`${match.path}/collections/:handle`}
+                    component={themeProduct}
+                    props={childProps}
+                />
+                <Route component={NotFound404} />
+            </Switch>
         )
     }
 }
