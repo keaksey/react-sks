@@ -12,7 +12,7 @@ import {
 } from './components'
 
 import Routes from './Routes'
-import './styles.css'
+import './styles.scss'
 
 type Props = {
     currentUser: PropTypes.object,
