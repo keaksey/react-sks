@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 // } from '@shopify/polaris'
 
 import {
-    SideBar,
+    // SideBar,
     HNavBar
 } from './components'
 

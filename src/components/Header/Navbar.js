@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Link, Logout } from './../Actions'
 import styles from './Header.module.scss'
+import './styles.scss'
 
 type Props = {
     currentUser: PropTypes.object,
@@ -22,7 +23,8 @@ class Navbar extends Component<Props, any> {
         const { open } = this.state;
         
         const user = this.props.currentUser;
-        //const shop = user.shop;
+        // console.log('user ', user)
+        // const shop = user.shop;
         
         return (
             <nav className="navbar root-navbar navbar-expand-lg fixed-top navbar-light bg-light">
@@ -44,6 +46,9 @@ class Navbar extends Component<Props, any> {
                             ? <Link to={'/your/shop'} className="btn btn-outline-primary my-2 mr-3 my-sm-0">Your Shop</Link>
                             : <Link to={'/your/shop/create'} className="my-2 mr-3 my-sm-0">Sell on our</Link>
                         */}
+                        {!user.isAuthenticated &&
+                            <Link to={'/account/signup'} className="my-2 my-sm-0 register-link" type="button">Register</Link>
+                        }
                         {user.isAuthenticated 
                             ? <Link to={'/your/account'} className="my-2 mr-3 my-sm-0">{user.username}</Link>
                             : <Link 
@@ -51,17 +56,8 @@ class Navbar extends Component<Props, any> {
                                 className="btn-outline-primary my-2 mr-3 my-sm-0" 
                                 type="button"
                              >
-                                {`Log In`}
+                                {`Sign in`}
                              </Link>
-                        }
-                        {user.isAuthenticated 
-                            ? <Logout 
-                                history={this.props.history}
-                                className="btn-outline-primary"
-                              >
-                                Logout
-                              </Logout>
-                            : <Link to={'/account/signup'} className="btn-outline-primary my-2 my-sm-0" type="button">Sign Up</Link>
                         }
                     </div>
                 </div>

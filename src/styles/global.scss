@@ -1,8 +1,8 @@
 @import 'polaris';
 
-// body {
-//     background-color: #fff;
-// }
+body {
+    background-color: #fff;
+}
 
 .btn {
     &.disabled {
@@ -10,17 +10,9 @@
     }
 }
 
-.navbar {
-    
-    &.root-navbar {
-        padding-left: 36px;
-        padding-right: 36px;
-        
-        a {
-            color: var(--orange);
-        }
-    }
-    
-}// navbar
+#sks-root{
+    height: 100%;
+    width: 100%;
+}
 
 @import "root";

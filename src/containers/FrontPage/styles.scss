@@ -1,0 +1,15 @@
+@import './../../styles/mixins/_bp_breakpoints.scss';
+
+[role="main"]{
+    overflow: hidden;
+    height: 100%;
+    padding-top: 6rem;
+    // width: 100%;
+    
+    &.container-fluid {
+        @include media-breakpoint-up(lg) {
+            padding-left: 36px;
+            padding-right: 36px;
+        }
+    }
+}

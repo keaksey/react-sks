@@ -1,0 +1,14 @@
+.navbar {
+    
+    &.root-navbar {
+        padding-left: 36px;
+        padding-right: 36px;
+        border-bottom: 1px solid #E1E3DF;
+        
+        .register-link {
+            margin-right: 7px;
+            border: 1px solid transparent;
+        }
+    }
+    
+}// navbar

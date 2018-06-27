@@ -1,0 +1,47 @@
+.footer-redesign {
+    
+    .etsy-icon {
+        display: inline-block;
+        fill: currentColor;
+        height: 24px;
+        vertical-align: middle;
+        width: 24px;
+    }
+    
+    .footer-logo {
+        color: var(--primary);
+        height: 30px;
+        width: 60px;
+    }
+    
+    @media only screen and (min-width: 0){
+        .bt-xs-1{
+            border-top: 1px solid #E1E3DF;
+        }
+    }
+    
+    @media only screen and (min-width: 900px){
+        .text-right-lg-up {
+            text-align: right !important;
+        }
+        
+        .pl-lg-6 {
+            padding-left: 36px;
+        }
+        
+        .pr-lg-4 {
+            padding-right: 24px !important;
+        }
+    }
+    
+    .text-gray-darker {
+        color: #222;
+    }
+    
+    .text-smaller {
+        font-size: 85.71%;
+    }
+    .text-gray-lighter {
+        color: #777;
+    }
+}// footer-redesign

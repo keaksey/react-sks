@@ -55,8 +55,8 @@ export default class Routes extends React.PureComponent<Props, any> {
     // };
     
     componentDidMount() {
-        let { shop } = this.props;
-        const themePath = `./Themes${shop.currentTheme.src}`
+        // let { shop } = this.props;
+        // const themePath = `./Themes${shop.currentTheme.src}`
         
         // this.loadThemeStyle(themePath);
     }

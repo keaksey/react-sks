@@ -5,9 +5,7 @@ import {
   Switch
 } from 'react-router-dom'
 
-import {
-  MyLoadable 
-} from './../../components'
+import HomePage from './containers/HomePage'
 
 import { 
   //AuthenticatedRoute, 
@@ -15,16 +13,12 @@ import {
   AppliedRoute
 } from './../../components/Routes'
 
-const AsyncHomePage = MyLoadable({
-    loader: () => import("./containers/HomePage")
-})
-
 export default function Routes({ childProps }: any) {
     return (
         <Switch>
             <AppliedRoute
               exact path="/"
-              component={AsyncHomePage}
+              component={HomePage}
               props={childProps}
             />
         </Switch>

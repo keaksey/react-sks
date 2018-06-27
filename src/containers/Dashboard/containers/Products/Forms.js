@@ -7,8 +7,8 @@ import {
     FormLayout,
     Select,
     PageActions,
-    Checkbox,
-    DisplayText,
+    // Checkbox,
+    // DisplayText,
     Stack
 } from '@shopify/polaris'
 
