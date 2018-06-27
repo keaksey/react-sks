@@ -1,7 +1,7 @@
 @import 'polaris';
 
-// html {
-//     font-size: 80.5%;
+// body {
+//     background-color: #fff;
 // }
 
 .btn {
@@ -9,3 +9,18 @@
         pointer-events: none;
     }
 }
+
+.navbar {
+    
+    &.root-navbar {
+        padding-left: 36px;
+        padding-right: 36px;
+        
+        a {
+            color: var(--orange);
+        }
+    }
+    
+}// navbar
+
+@import "root";

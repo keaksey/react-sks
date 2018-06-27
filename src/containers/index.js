@@ -36,9 +36,7 @@ class App extends Component<Props> {
                     <AppProvider gqlClient={result}>
                         <React.Fragment>
                           <Navbar {...childProps} />
-                          <div className="container-fluid">
-                              <Routes childProps={childProps} />
-                          </div>
+                          <Routes childProps={childProps} />
                         </React.Fragment>
                     </AppProvider>
                 )}}

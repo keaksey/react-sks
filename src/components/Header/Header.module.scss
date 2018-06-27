@@ -1,0 +1,25 @@
+@import './../../styles/mixins/_bp_breakpoints.scss';
+
+.Collapse {
+    //background-color: red;
+    @include media-breakpoint-down(lg) {
+        position: fixed;
+        top: 56px; /* Height of navbar */
+        bottom: 0;
+        left: 100%;
+        width: 100%;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        overflow-y: auto;
+        visibility: hidden;
+        background-color: #343a40;
+        transition-timing-function: ease-in-out;
+        transition-duration: .3s;
+        transition-property: left, visibility;
+        
+        &.Open {
+            left: 0;
+            visibility: visible;
+        }
+    }
+}

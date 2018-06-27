@@ -2,36 +2,48 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Link, Logout } from './../Actions'
+import styles from './Header.module.scss'
 
 type Props = {
     currentUser: PropTypes.object,
     gqlClient: PropTypes.object,
     history: PropTypes.object
 };
-class Navbar extends Component<Props> {
+class Navbar extends Component<Props, any> {
+    state = {
+        open: false
+    };
+    
+    handleToggleClass = () => {
+        this.setState((prevState) => ({open: !prevState.open}));
+    };
     
     render() {
+        const { open } = this.state;
         
         const user = this.props.currentUser;
-        const shop = user.shop;
+        //const shop = user.shop;
         
         return (
-            <nav className="navbar navbar-expand-sm fixed-top navbar-light bg-light">
-                <Link className="navbar-brand" to="/">Home</Link>
-                <Button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <nav className="navbar root-navbar navbar-expand-lg fixed-top navbar-light bg-light">
+                <Link className="navbar-brand" to="/">Car Rental</Link>
+                <Button className="navbar-toggler p-0 border-0" type="button" 
+                    data-toggle="offcanvas"
+                    onClick={this.handleToggleClass}
+                >
                     <span className="navbar-toggler-icon"></span>
                 </Button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <div className={`${styles.Collapse} ${open ? styles.Open : ''} navbar-collapse`} id="offcanvas">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
                             <Link className="nav-link" to="/">About <span className="sr-only">(current)</span></Link>
                         </li>
                     </ul>
                     <div className="my-2 my-lg-0">
-                        {shop.isOwner 
+                        {/*shop.isOwner 
                             ? <Link to={'/your/shop'} className="btn btn-outline-primary my-2 mr-3 my-sm-0">Your Shop</Link>
                             : <Link to={'/your/shop/create'} className="my-2 mr-3 my-sm-0">Sell on our</Link>
-                        }
+                        */}
                         {user.isAuthenticated 
                             ? <Link to={'/your/account'} className="my-2 mr-3 my-sm-0">{user.username}</Link>
                             : <Link 
@@ -45,7 +57,7 @@ class Navbar extends Component<Props> {
                         {user.isAuthenticated 
                             ? <Logout 
                                 history={this.props.history}
-                                className="btn-outline-danger"
+                                className="btn-outline-primary"
                               >
                                 Logout
                               </Logout>
