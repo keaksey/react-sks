@@ -9,6 +9,7 @@ import {
 export { default as withForm} from './withForm'
 export { default as ReduxForm } from './Form'
 export { default as TextareaEditor } from './TextareaEditor'
+export { default as LocationField } from './LocationField'
 
 const propsTypes = {
     input: PropTypes.object

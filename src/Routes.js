@@ -15,7 +15,7 @@ export default function Routes() {
     return (
         <Router>
             <Switch>
-                <Route path="/shop/:domain" component={StoreFront}/>
+                <Route path="/:domain" component={StoreFront}/>
                 <Route path="/" component={AppMainPage}/>
                 <Route component={NotFound404} />
             </Switch>

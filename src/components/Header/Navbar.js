@@ -1,7 +1,9 @@
 // @flow
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Link, Logout } from './../Actions'
+import { Button, Link, 
+    // Logout 
+} from './../Actions'
 import styles from './Header.module.scss'
 import './styles.scss'
 
